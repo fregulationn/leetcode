@@ -298,6 +298,30 @@ public class Tree {
     }
 
 
+    public static int kthSmallest(TreeNode root, int k) {
+        if (root==null)
+            return 0;
+
+        inOrder(root, k);
+        return numbers.get(k - 1);
+    }
+
+
+    static List<Integer> numbers = new ArrayList<>();
+
+    public static void inOrder(TreeNode root, int k) {
+        if (root == null)
+            return;
+
+        inOrder(root.left, k);
+
+        if (numbers.size() >= k)
+            return;
+
+        numbers.add(root.val);
+
+        inOrder(root.right, k);
+    }
 
 
     public static void main(String[] args) {
@@ -315,10 +339,15 @@ public class Tree {
 //
 //        TreeNode root = buildTreeFromPost(right, postorder);
 
-        int[] value = new int[]{2, 1, 3, 10, 7, 9, 1, 2, 0, 1, 10, 0, 0, 8, 8, 0, 0, 0, 0, 7};
+
 //        connect(createTree2(value));
 
-        System.out.println("OK");
+
+        int[] value = new int[]{5, 3, 6, 2, 4, 0, 0, 1};
+
+        TreeNode tmp = createTree(value);
+
+        System.out.println(kthSmallest(tmp, 3));
 
 
     }
@@ -408,7 +437,6 @@ public class Tree {
 //
 //        return root;
 //    }
-
 
 
 }
