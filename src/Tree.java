@@ -33,6 +33,7 @@ class TreeLinkNode {
 
 
 public class Tree {
+
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
 
@@ -71,8 +72,6 @@ public class Tree {
 
 
     public static TreeNode createTree(int[] value) {
-
-
         Queue<TreeNode> store_node = new ConcurrentLinkedQueue<TreeNode>();
         Queue<Integer> store_order = new ConcurrentLinkedQueue<Integer>();
 
@@ -298,8 +297,9 @@ public class Tree {
     }
 
 
+    //230. Kth Smallest Element in a BST
     public static int kthSmallest(TreeNode root, int k) {
-        if (root==null)
+        if (root == null)
             return 0;
 
         inOrder(root, k);
@@ -319,10 +319,127 @@ public class Tree {
             return;
 
         numbers.add(root.val);
-
         inOrder(root.right, k);
     }
 
+    // 对称二叉树
+    public static boolean isSymmetric(TreeNode root) {
+        if (root == null)
+            return true;
+
+        Stack<TreeNode> value_store_left = new Stack<>();
+        Stack<TreeNode> value_store_right = new Stack<>();
+        value_store_left.push(root.left);
+        value_store_right.push(root.right);
+
+        while (!value_store_left.empty() && !value_store_right.empty()) {
+            TreeNode tmp_left = value_store_left.pop();
+            TreeNode tmp_right = value_store_right.pop();
+
+            if (tmp_left == null && tmp_right == null)
+                continue;
+
+            if (tmp_left == null || tmp_right == null)
+                return false;
+
+            if (tmp_left.val != tmp_right.val) {
+                return false;
+            }
+
+            value_store_left.push(tmp_left.right);
+            value_store_right.push(tmp_right.left);
+            value_store_left.push(tmp_left.left);
+            value_store_right.push(tmp_right.right);
+        }
+
+        if (!value_store_left.empty() || !value_store_right.empty())
+            return false;
+
+        return true;
+    }
+
+    public static boolean recursion_symmetric(TreeNode left, TreeNode right) {
+
+        if (left == null && right == null)
+            return true;
+
+        if ((left != null && right == null) || (left == null && right != null))
+            return false;
+
+        if (left.val != right.val)
+            return false;
+
+        return recursion_symmetric(left.left, right.right) && recursion_symmetric(left.right, right.left);
+    }
+
+
+    // Encodes a tree to a single string.
+    public static String serialize(TreeNode root) {
+        StringBuilder  res = new StringBuilder("");
+        Queue<TreeNode> store_node = new LinkedList<>();
+
+        store_node.add(root);
+        while (!store_node.isEmpty()) {
+            TreeNode tmp = ((LinkedList<TreeNode>) store_node).pollFirst();
+            if (tmp == null) {
+                res.append( "#,");
+                continue;
+            } else {
+                res.append(Integer.toString(tmp.val));
+                res.append( ",");
+            }
+            store_node.add(tmp.left);
+            store_node.add(tmp.right);
+        }
+
+        int cut = res.length()-2;
+        while (res.charAt(cut) == '#' )
+        {
+            cut-=2;
+        }
+
+
+        return res.toString().substring(0, cut +1);
+    }
+
+    // Decodes your encoded data to tree.
+    public static TreeNode deserialize(String data) {
+        if(data==null||data.length()<=0 ||data =="#") return null;
+
+        String[] strs=data.split(",");
+
+        int index = 0;
+        Queue<TreeNode> store_node = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(strs[index++]));
+        store_node.add(root);
+
+        while (!store_node.isEmpty() &&index<strs.length) {
+
+            TreeNode tmp = ((LinkedList<TreeNode>) store_node).pollFirst();
+
+            if (!strs[index].equals("#")) {
+
+                TreeNode left = new TreeNode(Integer.parseInt(strs[index]));
+                tmp.left = left;
+                store_node.add(left);
+
+            }
+            index++;
+
+            if (index >=strs.length )
+                break;
+
+            if (!strs[index].equals("#")) {
+                TreeNode right = new TreeNode(Integer.parseInt(strs[index]));
+                tmp.right = right;
+                store_node.add(right);
+
+            }
+            index++;
+        }
+
+        return root;
+    }
 
     public static void main(String[] args) {
 //        int[] value = new int[]{3, 4, 5, 0, 2, 4, 0, 0, 0, 3, 2};
@@ -343,11 +460,11 @@ public class Tree {
 //        connect(createTree2(value));
 
 
-        int[] value = new int[]{5, 3, 6, 2, 4, 0, 0, 1};
+        int[] value = new int[]{1,2};
 
         TreeNode tmp = createTree(value);
 
-        System.out.println(kthSmallest(tmp, 3));
+        deserialize(serialize(tmp));
 
 
     }
