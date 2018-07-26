@@ -1,4 +1,4 @@
-#段落解析代码文档
+# 段落解析代码文档
 
 >段落解析的代码分析文档，供于参考
 
@@ -12,11 +12,6 @@ python setup.py install
 ```
 
 ~~直接下载下来的工程是没有办法直接运行的~~已更新
-
-[^_^]:读了keras方法的实现，`from  .  import XX`的写法还是比较规范的
-[from  xxx import 的问题](https://www.cnblogs.com/dodocie/p/6672313.html)：这里面的方法只解决了一种情况
-[同上，相对路径导入](https://segmentfault.com/q/1010000009727306)
-~~这个问题的解决肯定和_init\_.py中的内容有关，但是我没有找到解决的方法，Linux环境下没有找到对应的系统变量~~，[_init\_.p](https://blog.csdn.net/monkey_D_feilong/article/details/52150224)，我发现没有关系，这个文件的作用是把setting下，dev中的配置注入的感觉，在python console中输入代码，输出的是dev
 
 
 <span style="border-bottom:2px solid yellow;">把整个文件在上一级目录打开就不会报错引用错误</span>
@@ -50,7 +45,7 @@ Keras的版本要匹配，2.2.0的不行，[BUG:AttributeError: module 'pandas' 
 通过`bilstm_ctc.py`中的`get_model`函数创建模型，定义`callback`类（来观察训练过程中网络内部的状态和统计信息，以及打印训练的效果）第一个txt中的段落为验证集，其余的txt中的段落用作训练集训练模型
 
 
-[^_^]:- [enumerate函数](http://www.runoob.com/python/python-func-enumerate.html)
+- [enumerate函数](http://www.runoob.com/python/python-func-enumerate.html)
 - [keras的callback函数](http://keras-cn.readthedocs.io/en/latest/other/callbacks/)
 
 #### bilstm_ctc.py
@@ -63,7 +58,7 @@ lambda用以对上一层的输出施以任何Theano/TensorFlow表达式，于ctc
 #####  `test1`
 每个epoch训练完后，会调用此函数，利用训练的模型，对验证集做预测，并打印loss和acc，以及预测正确的标签
 
-[^_^]:keras:[中文文档](http://keras-cn.readthedocs.io/en/latest/)，不懂的直接再这里找
+keras:[中文文档](http://keras-cn.readthedocs.io/en/latest/)
 - [merge函数（concatenate）](http://keras-cn.readthedocs.io/en/latest/layers/merge/)
 - [dropout](http://keras-cn.readthedocs.io/en/latest/layers/core_layer/#dropout)，防止过拟合
 - [TimeDistributed包装器](https://blog.csdn.net/xiaojiajia007/article/details/76665016)
