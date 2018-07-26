@@ -35,7 +35,7 @@ python setup.py install
 - `test`和`testdata`为测试用的文件夹
 
 ---
-## 训练过程
+## 训练代码
 
 1. **getParaLabel.py**  将标注文件中的“Para”符号等替换，并在句子和段落之间添加制表符和/msxf
 2.  **prcocessing.py** 对文档做处理，将文件夹下的所有数据转换为段落和对应的标签，另存为两个文件
