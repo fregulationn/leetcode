@@ -14,7 +14,7 @@ python setup.py install
 ~~直接下载下来的工程是没有办法直接运行的~~已更新
 
 [>_>]:
-<span style="border-bottom:2px solid yellow;">把整个文件在上一级目录打开就不会报错引用错误</span>
+把整个文件在上一级目录打开就不会报错引用错误  
 
 将dict解压之后文件夹中的setup.py和一些其他配置的文件放到paragraph外层根目录，可以用上面的命令来对整个项目打包，以及运行整个项目工程文件启动REST服务
 如果nohup直接退出，很有可能是那条命令本来就不能运行
