@@ -23,16 +23,16 @@ python setup.py install
 ![Alt text](./images/1532571387816.png)  
 
 整个项目是在朋哥的句子REST服务的基础上修改的  
-`api`文件夹中对段落API做详细的实现（接受输入输出参数，预测）  
-`dist`为打包后文件存储位置  
-`experiment`类似于test的作用（在这里没有用到）  
-`intelli_extract_paragraph.egg-info`  Same concept as a .jar file in Java, it is a .zip file with some metadata files renamed .egg, for distributing code as bundles.  
-`middleware` 请求日志打印  
-`preprocessing` 预处理  
-`setting` REST服务的一些配置（包括模型路径）  
-`train` 段落解析模型训练代码
+- `api`文件夹中对段落API做详细的实现（接受输入输出参数，预测）  
+- `dist`为打包后文件存储位置  
+- `experiment`类似于test的作用（在这里没有用到）  
+- `intelli_extract_paragraph.egg-info`  Same concept as a .jar file in Java, it is a .zip file with some metadata files renamed .egg, for distributing code as bundles.  
+- `middleware` 请求日志打印  
+- `preprocessing` 预处理  
+- `setting` REST服务的一些配置（包括模型路径）  
+- `train` 段落解析模型训练代码
 余下的单个文件，服务的启动，打包，部署，日志和配置
-`test`和`testdata`为测试用的文件夹
+- `test`和`testdata`为测试用的文件夹
 
 ---
 ## 训练过程
