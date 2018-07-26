@@ -36,9 +36,9 @@ dataUrl为需要解析的文件在腾讯云中的路径
 
 ```
 ProgramParseCompleteDTO {
-dataUrl (string, optional): 文件路径（上传到腾讯云中的） ,
-etag (string, optional): 文件上传返回的etag ,
-planId (integer, optional): 计划ID
+    dataUrl (string, optional): 文件路径（上传到腾讯云中的） ,
+    etag (string, optional): 文件上传返回的etag ,
+    planId (integer, optional): 计划ID
 }
 ```
 `Response Class (Status 200)`：
@@ -53,11 +53,11 @@ ResponseDataModel {
 ```
 
 ### 2. 整体服务及内部模块调用形式
-- 整体服务使用Spingbot对外服务  
+- 整体服务使用Spingboot对外服务  
 - 内部通过http服务调用段落、句子、文本分类、实体、统计等模块
 
 ### 3. 保顾内部接口及数据预处理
-目录结构：每个模块的请求参数为2个，分别是输入文件夹路径input\_dir，输出文件夹路径output_dir  
+目录结构：
 
       basedir|（保顾数据处理的根目录）
 	            downPdf|
@@ -70,7 +70,7 @@ ResponseDataModel {
 				 entity|
 			  statistic|
 
-内部服务请求的返回都是类似的
+内部服务请求的返回都是类似的  
 `Response Class (Status 200)`：
 ```
 ~~~Response {
@@ -84,7 +84,7 @@ ResponseDataModel {
 根据业务方请求参数在腾讯云中下载pdf文档，存储到`downPdf`目录（下载的时候利用失败重试机制，如果下载的文件数量与Json中的不符，重新下载，尝试三次放弃）
 
 #### 3.2 pdf解析
-通过pdf解析工具将`downPdf`中的pdf转换为方便标注格式的文本文档
+通过pdf解析工具将`downPdf`中的pdf转换为方便标注格式的文本文档    
 为方便段落和句子解析，将pdf的段落和句子提取的结果分别存储到`paragraphParse`和`SentenceParse`目录下
 
 #### 3.3 段落解析（调用内部服务）
