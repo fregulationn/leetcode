@@ -108,7 +108,7 @@ keras:[中文文档](http://keras-cn.readthedocs.io/en/latest/)
  a
 
 [^_^]:
-    b
+b
 
 c
 
