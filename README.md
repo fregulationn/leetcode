@@ -2,7 +2,7 @@
 
 >段落解析的代码分析文档，供于参考
 
-#### 项目加载
+## 项目加载
 python 工程打包，部署命令
 ```
 python setup.py sdist --formats=zip 
@@ -19,7 +19,7 @@ python setup.py install
 将dict解压之后文件夹中的setup.py和一些其他配置的文件放到paragraph外层根目录，可以用上面的命令来对整个项目打包，以及运行整个项目工程文件启动REST服务
 如果nohup直接退出，很有可能是那条命令本来就不能运行
 
-###项目结构
+## 项目结构
 ![Alt text](./images/1532571387816.png)
 整个项目是在朋哥的句子REST服务的基础上修改的
 `api`文件夹中对段落API做详细的实现（接受输入输出参数，预测）
@@ -34,7 +34,7 @@ python setup.py install
 `test`和`testdata`为测试用的文件夹
 
 ---
-### 训练过程
+## 训练过程
 
 1. **getParaLabel.py**  将标注文件中的“Para”符号等替换，并在句子和段落之间添加制表符和/msxf
 2.  **prcocessing.py** 对文档做处理，将文件夹下的所有数据转换为段落和对应的标签，另存为两个文件
@@ -45,17 +45,14 @@ Keras的版本要匹配，2.2.0的不行，[BUG:AttributeError: module 'pandas' 
 通过`bilstm_ctc.py`中的`get_model`函数创建模型，定义`callback`类（来观察训练过程中网络内部的状态和统计信息，以及打印训练的效果）第一个txt中的段落为验证集，其余的txt中的段落用作训练集训练模型
 
 
-- [enumerate函数](http://www.runoob.com/python/python-func-enumerate.html)
-- [keras的callback函数](http://keras-cn.readthedocs.io/en/latest/other/callbacks/)
-
-#### bilstm_ctc.py
-##### `get_model` 
+### bilstm_ctc.py
+#### `get_model` 
 模型构造，n\_class为输出的分类的个数，X就是模型的输入（文本最长段数*规定的w2v_size）
 
 两层，双向GRU网络，[一些参数说明](https://www.2cto.com/net/201708/664769.html)
 lambda用以对上一层的输出施以任何Theano/TensorFlow表达式，于ctc.ctc_loss中使用ctc_merge_repeated参数，确保重复标签不合并
 
-#####  `test1`
+####  `test1`
 每个epoch训练完后，会调用此函数，利用训练的模型，对验证集做预测，并打印loss和acc，以及预测正确的标签
 
 keras:[中文文档](http://keras-cn.readthedocs.io/en/latest/)
@@ -67,31 +64,26 @@ keras:[中文文档](http://keras-cn.readthedocs.io/en/latest/)
 - 防止某些算法中出现无穷大或NaN的问题，如1/0 、log(0)等发生如：tf.reduce_sum(ys * tf.log(prediction)，改成：tf.reduce_sum(ys * tf.log(prediction+1e-8)
 - [lamda函数](https://www.cnblogs.com/evening/archive/2012/03/29/2423554.html)
 - 优化器和loss是keras中的两个必须参数，loss_out估计就是loss，Adam，随机优化
+- [enumerate函数](http://www.runoob.com/python/python-func-enumerate.html)
+- [keras的callback函数](http://keras-cn.readthedocs.io/en/latest/other/callbacks/)
 
 
-#### **utils.py**
-#####  `get_train_source_matrix`
+### **utils.py**
+####  `get_train_source_matrix`
 得到每个txt有多少个段落，读取文件，然后计数，将csv中对应段的平均词向量取出来作为模型的输入
 `texts`为 [[0], [1, 2], [3, 4, 5], [6, 7, 8, 9]]形式的数组，相当于把每个合同的段落，在汇总的段落中所占的位置标记出来，然后如果长度小于最大文本段落的就补0对齐
 `train_source_matric` 三维[samples,timestep,d2v\_embedding]，samplestxt文本的个数，timestep最长txt文本段落条数，w2v_size词向量维数，这个矩阵可以这样理解，前两维就可以定位到在哪个文本中的哪一段，第三维为对应段的平均词向量
 这个函数有很大部分都是把顺序处理的二维的段的平均词向量，变成三维的，方便直接送入网络
 `MAX_SOURCE_LENGTH`为多个txt文件中段落最多的个数
 
-#####  `get_target`
+####  `get_target`
 将标签对应到每个文件之后，将总的标签去重，然后按顺序，构建序号和词之间相互的字典（target_vocab_to_int，target_int_to_vocab），再利用标签和文件对应的关系，得到Y（target_label_to_int），也就是每个文件里的标签对应的序号数组（二维，文件和序号）
 
-##### `text_to_int`
+#### `text_to_int`
 实现上面函数中的一个功能，利用词也就是标签和序号之间的对应关系，和一个文件的标签，映射为一个一维数组
 
 
-
-Paragraph
-训练得到的模型也会放在 paragraph file 中
-prepocessing是写的可以加快处理速度的函数
-
-
-
-#### 段落解析实验
+## 段落解析实验
 段落结果预测准确率
 
 段落解析的代码中，getPara中对location的处理，要有`</t>`的结尾的时候才会去掉
