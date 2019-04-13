@@ -3,4 +3,4 @@ project(leetcode)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(leetcode dynamic_progrmming.cpp)
+add_executable(leetcode src/dynamic_progrmming.cpp)
